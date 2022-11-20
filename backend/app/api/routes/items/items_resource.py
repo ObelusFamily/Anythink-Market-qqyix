@@ -40,6 +40,7 @@ async def list_items(
         favorited=items_filters.favorited,
         limit=items_filters.limit,
         offset=items_filters.offset,
+        title=items_filters.title,
         requested_user=user,
     )
     items_for_response = [
