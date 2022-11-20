@@ -9,7 +9,11 @@ const Banner = (props) => {
         <div>
           <span>A place to </span>
           <span id="get-part">get </span>
-            <input id="search-box" placeholder="Enter your item title" onChange={props.handleChange}/>
+          <input
+            id="search-box"
+            placeholder="Enter your item title"
+            onChange={props.handleChange}
+          />
           <span> the cool stuff.</span>
         </div>
       </div>

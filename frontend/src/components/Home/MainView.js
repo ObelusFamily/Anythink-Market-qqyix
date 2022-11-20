@@ -77,7 +77,7 @@ const MainView = (props) => {
   // console.log("MainView.Props:", props.query);
   let items = props.items;
   if (props.query) {
-    items = props.items.filter(item => item.title.includes(props.query))
+    items = props.items.filter((item) => item.title.includes(props.query));
   }
   return (
     <div>

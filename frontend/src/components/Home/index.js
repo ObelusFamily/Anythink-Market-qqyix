@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {query: ""};
+    this.state = { query: "" };
   }
   componentWillMount() {
     this.props.onLoad(
@@ -43,19 +43,20 @@ class Home extends React.Component {
     this.props.onUnload();
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     // console.log("form e.target.value.length:", e.target.value.length)
-    if (e.target.value.length >= 3 || e.target.value.length === 0) this.setState({query: e.target.value})
+    if (e.target.value.length >= 3 || e.target.value.length === 0)
+      this.setState({ query: e.target.value });
   };
 
   render() {
     return (
       <div className="home-page">
-        <Banner handleChange={this.handleChange}/>
+        <Banner handleChange={this.handleChange} />
 
         <div className="container page">
           <Tags tags={this.props.tags} onClickTag={this.props.onClickTag} />
-          <MainView query={this.state.query}/>
+          <MainView query={this.state.query} />
         </div>
       </div>
     );
