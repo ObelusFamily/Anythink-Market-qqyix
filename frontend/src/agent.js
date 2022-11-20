@@ -50,10 +50,11 @@ const Tags = {
   getAll: () => requests.get("/tags"),
 };
 
-const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
+const limit = (count, p, q) =>
+  `limit=${count}&offset=${p ? p * count : 0}&title=${q || ""}`;
 const omitSlug = (item) => Object.assign({}, item, { slug: undefined });
 const Items = {
-  all: (page) => requests.get(`/items?${limit(1000, page)}`),
+  all: (page, query) => requests.get(`/items?${limit(1000, page, query)}`),
   bySeller: (seller, page) =>
     requests.get(`/items?seller=${encode(seller)}&${limit(500, page)}`),
   byTag: (tag, page) =>
