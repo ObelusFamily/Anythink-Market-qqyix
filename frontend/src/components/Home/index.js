@@ -27,14 +27,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {query: ""};
+  }
   componentWillMount() {
-    const tab = "all";
-    const itemsPromise = agent.Items.all;
-
     this.props.onLoad(
-      tab,
-      itemsPromise,
-      Promise.all([agent.Tags.getAll(), itemsPromise()])
+      "all",
+      (page) => agent.Items.all(page, this.state.query),
+      Promise.all([agent.Tags.getAll(), agent.Items.all(this.state.query)])
     );
   }
 
@@ -42,14 +43,19 @@ class Home extends React.Component {
     this.props.onUnload();
   }
 
+  handleChange = e => {
+    // console.log("form e.target.value.length:", e.target.value.length)
+    if (e.target.value.length >= 3 || e.target.value.length === 0) this.setState({query: e.target.value})
+  };
+
   render() {
     return (
       <div className="home-page">
-        <Banner />
+        <Banner handleChange={this.handleChange}/>
 
         <div className="container page">
           <Tags tags={this.props.tags} onClickTag={this.props.onClickTag} />
-          <MainView />
+          <MainView query={this.state.query}/>
         </div>
       </div>
     );

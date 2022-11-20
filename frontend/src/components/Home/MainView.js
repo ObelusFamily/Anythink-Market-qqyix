@@ -29,7 +29,11 @@ const YourFeedTab = (props) => {
 const GlobalFeedTab = (props) => {
   const clickHandler = (ev) => {
     ev.preventDefault();
-    props.onTabClick("all", agent.Items.all, agent.Items.all());
+    props.onTabClick(
+      "all",
+      (page) => agent.Items.all(page, props.query),
+      agent.Items.all(props.query)
+    );
   };
   return (
     <li className="nav-item">
@@ -70,6 +74,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MainView = (props) => {
+  // console.log("MainView.Props:", props.query);
+  let items = props.items;
+  if (props.query) {
+    items = props.items.filter(item => item.title.includes(props.query))
+  }
   return (
     <div>
       <div className="feed-toggle">
@@ -88,7 +97,7 @@ const MainView = (props) => {
 
       <ItemList
         pager={props.pager}
-        items={props.items}
+        items={items}
         loading={props.loading}
         itemsCount={props.itemsCount}
         currentPage={props.currentPage}
