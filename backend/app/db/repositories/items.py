@@ -108,6 +108,7 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
         favorited: Optional[str] = None,
         limit: int = 20,
         offset: int = 0,
+        title: str = '',
         requested_user: Optional[User] = None,
     ) -> List[Item]:
         query_params: List[Union[str, int]] = []
@@ -203,10 +204,10 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
         query_params.extend([limit, offset])
 
         items_rows = await self.connection.fetch(query.get_sql(), *query_params)
-
         return [
             await self.get_item_by_slug(slug=item_row['slug'], requested_user=requested_user)
             for item_row in items_rows
+            if title in item_row['title']
         ]
 
     async def get_items_for_user_feed(
